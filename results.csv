@@ -1,5 +1,5 @@
 question_id,keyword_top_ids,keyword_scores,embedding_top_ids,embedding_scores,required_ids,keyword_evidence_complete,embedding_evidence_complete,observation
-Q1,A1;A2,3;2,A2;T1,0.6864456878;0.5819528175,A1;A2,,,
-Q2,A2;B1,2;1,A2;T1,0.5851933325;0.4347606030,A2,,,
-Q3,T1;A2,2;1,T1;B1,0.7420273786;0.4711952400,T1,,,
-Q4,A2;B1,1;1,T1;A2,0.3477212227;0.3208271317,absent,,,
+Q1,A1;A2,3;2,A2;T1,0.6864456878;0.5819528175,A1;A2,yes (2/2),partial (1/2) - A1 missing,"Keyword retrieved both A1 and A2, but A1 partly matched only on the token '00' (19:00 vs 08:00/22:00) and missed 'students' vs 'student'. Embedding missed A1 (rank 4, 0.3742) and selected T1 instead, so the access-hours rule is missing: partial evidence."
+Q2,A2;B1,2;1,A2;T1,0.5851933325;0.4347606030,A2,yes (1/1),yes (1/1),Both found A2. Embedding ranked A2 first (0.5852) for the paraphrase 'without another person present' vs 'two trained people to be present'. Keyword matched A2 only on 'laser' and 'present' ('person' did not match 'people').
+Q3,T1;A2,2;1,T1;B1,0.7420273786;0.4711952400,T1,yes (1/1),yes (1/1),Both found T1. Useful embedding match: T1 scored 0.7420 with a clear margin over B1 (0.4712) although 'refresh/qualification' share no words with 'renewed/training'. Keyword reached T1 only through 'laser' and 'must'.
+Q4,A2;B1,1;1,T1;A2,0.3477212227;0.3208271317,absent,n/a - answer absent,n/a - answer absent,No source states the laser wavelength. Keyword returned A2 and B1 on 'laser' alone (three-way tie at 1). Embedding still returned T1 (0.3477) and A2 (0.3208) because it always returns the top k; a positive score does not mean the question is answerable.

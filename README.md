@@ -1,6 +1,35 @@
 # CEDAR-RAG
 
+Author: Yilin Jiang (worked solo, no partner).
+
 A small teaching project for the retrieval step of RAG (retrieval-augmented generation). It prints matching source passages and does not generate an answer.
+
+## Environment
+
+Versions recorded by the actual run in `evidence/setup-check.txt`:
+
+| Component | Version |
+|---|---|
+| Python | 3.11.14 |
+| sentence-transformers | 6.1.0 |
+| torch | 2.14.1 |
+| transformers | 5.20.2 |
+| numpy | 2.4.6 |
+
+Model: `sentence-transformers/all-MiniLM-L6-v2`. Model loading and inference use CPU only.
+
+One-time setup commands (run only when creating the environment):
+
+```sh
+cd /Users/yilinjiang/Projects/cedar-rag
+/Users/yilinjiang/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/bin/python3.11 -m venv .venv
+.venv/bin/python -m pip install sentence-transformers numpy
+.venv/bin/python setup_check.py
+```
+
+The Python command above uses the resolved Python 3.11 executable installed on this machine. On another machine, use the path to its installed Python 3.11 executable. The versions above record this project's setup run; the unpinned install command may install different package versions when run later.
+
+The model downloads once into `_local/models` during the first setup check and is reused from that cache. `_local/` (including `_local/models`) and `.venv/` are git-ignored. The embedding retriever loads only the already-downloaded local model files.
 
 ## Run
 
@@ -42,3 +71,35 @@ The model turns each text into a vector of 384 numbers. Normalization makes each
 The program prints package versions, actual shapes, lengths, the first 12 coordinates of every vector, all six scores, and the selected source passages. Coordinates are shown to four decimal places but have no individual semantic labels. Computation retains the model's unrounded values, converted to float64 for arithmetic. For each question's top passage it shows the first 12 products, their subtotal, the remaining 372 coordinates' subtotal, and the full similarity. All 384 coordinates determine retrieval. Scores sort descending, with ties by ascending ID; `--k` defaults to 2 and selects the top `k` available passages without a relevance threshold.
 
 The actual Q1 run is saved in `evidence/embedding-inspection.txt`. No answer is generated, and `retrieve.py` is unchanged.
+
+## Files
+
+The submission tracks the following files:
+
+| File | Contents |
+|---|---|
+| `.gitignore` | Ignore rules for `.venv/`, `__pycache__/`, `*.pyc`, `.DS_Store`, and `_local/`. |
+| `README.md` | Author, environment, setup and run commands, retrieval explanations, file inventory, and submission notes. |
+| `docs/access.txt` | Verbatim Cedar Lab passages A1 and A2: access hours and the laser two-person rule. |
+| `docs/training.txt` | Verbatim Cedar Lab passages T1 and T2: laser training and accompanied visitors. |
+| `docs/booking.txt` | Verbatim Cedar Lab passages B1 and B2: room bookings and cancellation. |
+| `retrieve.py` | Standard-library keyword retrieval with exact stopwords, distinct-word overlap scores, and ranked source passages. |
+| `retrieve_embeddings.py` | Cached CPU embedding retrieval, vector inspection, dot-product and cosine checks, and ranked source passages. |
+| `setup_check.py` | Environment check that loads the model on the CPU, encodes a test sentence, and prints versions and vector shape. |
+| `results.csv` | Q1-Q4 selected IDs and scores, evidence targets, and human review. The `keyword_evidence_complete`, `embedding_evidence_complete`, and `observation` columns are our human judgments. |
+| `evidence/setup-check.txt` | Actual setup-check output, including package versions, model name, CPU device, and vector shape. |
+| `evidence/embedding-inspection.txt` | Actual Q1 embedding run, including coordinates, lengths, all scores, similarity calculations, and selected passages. |
+| `evidence/retrieval-runs.txt` | Actual keyword and embedding output for Q1-Q4 at `k=2`, with commands and execution environment. |
+| `evidence/k-experiment.txt` | Q1 embedding selections for `k=1`, `k=2`, and `k=3`; actual reruns for `k=1` and `k=3`; and a separately labeled human judgment section. |
+| `evidence/answer-audit-q1.md` | Q1's original generated answer, human audit, one prompt revision, revised answer, and follow-up audit using the same passages. |
+| `evidence/answer-audit-q4.md` | Q4's original generated answer and human audit for a question whose answer is absent from the sources. |
+
+## Answer generation (Task 4)
+
+Answers were generated manually in fresh Codex conversations with no file access, pasting only the question, the `k=2` embedding passages, and the prompt. See `evidence/answer-audit-q1.md` and `evidence/answer-audit-q4.md` for the answers, audits, and Q1 prompt revision. The retrieval scripts themselves print passages and do not generate answers.
+
+All run output in evidence/ is our own; no borrowed output.
+
+## Individual reflection — Yilin Jiang
+
+(to be added)

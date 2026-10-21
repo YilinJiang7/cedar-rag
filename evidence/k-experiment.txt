@@ -125,3 +125,14 @@ Laser training must be renewed every 12 months. A current training record is req
 
 [B1] booking.txt
 Laser room bookings are limited to two hours per session. Reserve the room through the equipment calendar.
+
+=== Judgment (written after reviewing the run output above; not program output) ===
+Required evidence for Q1: A1 (access hours) and A2 (two trained people when the laser operates).
+k=1: A2        -> coverage 1/2 (A1 missing)
+k=2: A2;T1     -> coverage 1/2 (A1 missing)
+k=3: A2;T1;B1  -> coverage 1/2 (A1 missing)
+A1 ranks 4th (0.3742), so embedding retrieval would need k=4 to include both required passages.
+What the extra passages added: T1 (k=2) adds a related condition - a current training record is
+required before operating the laser - useful context but not one of the two required passages.
+B1 (k=3) adds the two-hour booking limit, which is irrelevant to whether a student may operate the
+laser alone at 19:00. In this run, increasing k added noise rather than the missing access-hours rule.
