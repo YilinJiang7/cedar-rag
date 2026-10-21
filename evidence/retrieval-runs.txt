@@ -1,0 +1,226 @@
+Q1-Q4 retrieval runs; k=2
+Working directory: /Users/yilinjiang/Projects/cedar-rag
+Environment: HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_HUB_DISABLE_PROGRESS_BARS=1 PYTHONDONTWRITEBYTECODE=1
+Commands below ran with this environment; stdout and stderr are captured together.
+
+=== Q1: keyword retrieval, k=2 ===
+$ .venv/bin/python retrieve.py 'May a trained graduate student operate the laser alone at 19:00?' --k 2
+Query words: 00, 19, alone, graduate, laser, operate, student, trained
+All chunk scores (highest first):
+A1 | access.txt | score=3 | matched=00, graduate, trained
+A2 | access.txt | score=2 | matched=laser, trained
+B1 | booking.txt | score=1 | matched=laser
+T1 | training.txt | score=1 | matched=laser
+T2 | training.txt | score=1 | matched=trained
+B2 | booking.txt | score=0 | matched=(none)
+
+Selected passages (k=2):
+
+[A1] access.txt
+General laboratory access hours are 08:00 to 22:00 for trained graduate students. Access outside these hours requires written approval from the lab manager.
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
+
+=== Q2: keyword retrieval, k=2 ===
+$ .venv/bin/python retrieve.py 'Can I use the laser without another person present?' --k 2
+Query words: another, laser, person, present, use, without
+All chunk scores (highest first):
+A2 | access.txt | score=2 | matched=laser, present
+B1 | booking.txt | score=1 | matched=laser
+T1 | training.txt | score=1 | matched=laser
+A1 | access.txt | score=0 | matched=(none)
+B2 | booking.txt | score=0 | matched=(none)
+T2 | training.txt | score=0 | matched=(none)
+
+Selected passages (k=2):
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
+
+[B1] booking.txt
+Laser room bookings are limited to two hours per session. Reserve the room through the equipment calendar.
+
+=== Q3: keyword retrieval, k=2 ===
+$ .venv/bin/python retrieve.py 'How frequently must I refresh my laser qualification?' --k 2
+Query words: frequently, how, laser, must, my, qualification, refresh
+All chunk scores (highest first):
+T1 | training.txt | score=2 | matched=laser, must
+A2 | access.txt | score=1 | matched=laser
+B1 | booking.txt | score=1 | matched=laser
+A1 | access.txt | score=0 | matched=(none)
+B2 | booking.txt | score=0 | matched=(none)
+T2 | training.txt | score=0 | matched=(none)
+
+Selected passages (k=2):
+
+[T1] training.txt
+Laser training must be renewed every 12 months. A current training record is required before operating the laser.
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
+
+=== Q4: keyword retrieval, k=2 ===
+$ .venv/bin/python retrieve.py 'What is the laser wavelength?' --k 2
+Query words: laser, wavelength, what
+All chunk scores (highest first):
+A2 | access.txt | score=1 | matched=laser
+B1 | booking.txt | score=1 | matched=laser
+T1 | training.txt | score=1 | matched=laser
+A1 | access.txt | score=0 | matched=(none)
+B2 | booking.txt | score=0 | matched=(none)
+T2 | training.txt | score=0 | matched=(none)
+
+Selected passages (k=2):
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
+
+[B1] booking.txt
+Laser room bookings are limited to two hours per session. Reserve the room through the equipment calendar.
+
+=== Q1-Q4: embedding retrieval, k=2 ===
+$ .venv/bin/python retrieve_embeddings.py 'May a trained graduate student operate the laser alone at 19:00?' 'Can I use the laser without another person present?' 'How frequently must I refresh my laser qualification?' 'What is the laser wavelength?' --k 2
+W1021 00:26:20.311000 9510 .venv/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Python: 3.11.14
+sentence-transformers: 6.1.0
+torch: 2.14.1
+transformers: 5.20.2
+numpy: 2.4.6
+Model: sentence-transformers/all-MiniLM-L6-v2
+Device: cpu
+Cache: _local/models (local files only)
+Document matrix shape: (6, 384)
+Document embeddings computed once and reused for every question in this run.
+Model outputs are retained without rounding and converted to float64 for similarity arithmetic.
+All 384 coordinates, not just the displayed 12, are used in retrieval.
+Individual coordinates are not assigned semantic names.
+Document A1 (access.txt): shape=(384,), length=1.0000000971
+  First 12 coordinates: [-0.0039, 0.0188, 0.0218, -0.0179, -0.0058, -0.0612, -0.0891, 0.0321, -0.0584, 0.0111, 0.0031, -0.0123]
+Document A2 (access.txt): shape=(384,), length=1.0000000409
+  First 12 coordinates: [0.0298, -0.0435, -0.0289, 0.0303, -0.0507, -0.0310, 0.0361, -0.0391, -0.0322, -0.0424, 0.0498, 0.0019]
+Document T1 (training.txt): shape=(384,), length=0.9999999532
+  First 12 coordinates: [0.0063, -0.0708, 0.0345, 0.0146, -0.1167, -0.0114, -0.0708, -0.0761, -0.0806, -0.0767, 0.0325, 0.1357]
+Document T2 (training.txt): shape=(384,), length=1.0000000234
+  First 12 coordinates: [0.0447, -0.0044, 0.0042, -0.0058, 0.0211, -0.0151, -0.0108, -0.0301, -0.0191, -0.0234, 0.0280, -0.0367]
+Document B1 (booking.txt): shape=(384,), length=1.0000000197
+  First 12 coordinates: [0.0856, -0.0417, -0.0194, 0.0377, -0.0668, -0.0053, -0.0260, -0.0618, -0.0186, -0.0023, -0.0050, 0.0659]
+Document B2 (booking.txt): shape=(384,), length=1.0000000787
+  First 12 coordinates: [0.0673, 0.0924, -0.0079, 0.0634, -0.0105, 0.0043, -0.0020, -0.0750, 0.0667, 0.0378, -0.0040, 0.0335]
+All document lengths approximately 1: verified (absolute tolerance 1e-6)
+
+Q1: May a trained graduate student operate the laser alone at 19:00?
+Question vector: shape=(384,), length=1.0000000343
+  First 12 coordinates: [0.0485, 0.0060, -0.0148, -0.0017, -0.0642, -0.0427, 0.0008, -0.0575, -0.0771, -0.0306, 0.0749, 0.0967]
+Question length approximately 1: verified (absolute tolerance 1e-6)
+All passage scores (descending; ties by ascending ID):
+A2 | access.txt | dot=0.6864456878 | cosine=0.6864456361
+T1 | training.txt | dot=0.5819528175 | cosine=0.5819528248
+B1 | booking.txt | dot=0.5326960339 | cosine=0.5326960052
+A1 | access.txt | dot=0.3742489069 | cosine=0.3742488577
+T2 | training.txt | dot=0.2704522332 | cosine=0.2704522176
+B2 | booking.txt | dot=0.1287396146 | cosine=0.1287396000
+Dot/cosine agreement: verified (rtol=1e-6, atol=1e-7; max difference=5.161682170574e-08)
+
+Similarity inspection for top passage A2:
+First 12 coordinate products: [0.0014475209, -0.0002631043, 0.0004261932, -0.0000504142, 0.0032577523, 0.0013239647, 0.0000280460, 0.0022502840, 0.0024829714, 0.0012972578, 0.0037300760, 0.0001809526]
+First 12 subtotal: 0.0161115004
+Remaining 372 coordinates subtotal: 0.6703341874
+Full similarity (all 384 coordinates): 0.6864456878
+Direct cosine = dot / (question length * passage length): 0.6864456361
+Subtotal sum agrees with full similarity: verified (rtol=1e-12, atol=1e-12)
+
+Selected passages (k=2; no relevance threshold):
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
+
+[T1] training.txt
+Laser training must be renewed every 12 months. A current training record is required before operating the laser.
+
+Q2: Can I use the laser without another person present?
+Question vector: shape=(384,), length=0.9999999857
+  First 12 coordinates: [-0.0378, -0.0049, -0.0282, -0.0339, -0.0531, -0.0218, 0.1002, -0.0135, -0.0502, -0.0710, 0.0827, 0.0600]
+Question length approximately 1: verified (absolute tolerance 1e-6)
+All passage scores (descending; ties by ascending ID):
+A2 | access.txt | dot=0.5851933325 | cosine=0.5851933170
+T1 | training.txt | dot=0.4347606030 | cosine=0.4347606295
+B1 | booking.txt | dot=0.4253561416 | cosine=0.4253561393
+T2 | training.txt | dot=0.1907539128 | cosine=0.1907539111
+B2 | booking.txt | dot=0.0576230445 | cosine=0.0576230408
+A1 | access.txt | dot=0.0356361195 | cosine=0.0356361165
+Dot/cosine agreement: verified (rtol=1e-6, atol=1e-7; max difference=2.654997655060e-08)
+
+Similarity inspection for top passage A2:
+First 12 coordinate products: [-0.0011275258, 0.0002149579, 0.0008127902, -0.0010275750, 0.0026957033, 0.0006763845, 0.0036119132, 0.0005261819, 0.0016171781, 0.0030113238, 0.0041206491, 0.0001122183]
+First 12 subtotal: 0.0152441995
+Remaining 372 coordinates subtotal: 0.5699491330
+Full similarity (all 384 coordinates): 0.5851933325
+Direct cosine = dot / (question length * passage length): 0.5851933170
+Subtotal sum agrees with full similarity: verified (rtol=1e-12, atol=1e-12)
+
+Selected passages (k=2; no relevance threshold):
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
+
+[T1] training.txt
+Laser training must be renewed every 12 months. A current training record is required before operating the laser.
+
+Q3: How frequently must I refresh my laser qualification?
+Question vector: shape=(384,), length=1.0000000084
+  First 12 coordinates: [0.0380, -0.0875, 0.0199, 0.0502, -0.0631, -0.0597, -0.0213, -0.0518, -0.0799, -0.0435, -0.0137, 0.0732]
+Question length approximately 1: verified (absolute tolerance 1e-6)
+All passage scores (descending; ties by ascending ID):
+T1 | training.txt | dot=0.7420273786 | cosine=0.7420274071
+B1 | booking.txt | dot=0.4711952400 | cosine=0.4711952267
+A2 | access.txt | dot=0.4492573944 | cosine=0.4492573723
+A1 | access.txt | dot=0.2363271791 | cosine=0.2363271542
+B2 | booking.txt | dot=0.1473102232 | cosine=0.1473102104
+T2 | training.txt | dot=0.0409516255 | cosine=0.0409516242
+Dot/cosine agreement: verified (rtol=1e-6, atol=1e-7; max difference=2.849546809625e-08)
+
+Similarity inspection for top passage T1:
+First 12 coordinate products: [0.0002379549, 0.0061950852, 0.0006876999, 0.0007348601, 0.0073666227, 0.0006812286, 0.0015070598, 0.0039453837, 0.0064458729, 0.0033396901, -0.0004459869, 0.0099373573]
+First 12 subtotal: 0.0406328282
+Remaining 372 coordinates subtotal: 0.7013945504
+Full similarity (all 384 coordinates): 0.7420273786
+Direct cosine = dot / (question length * passage length): 0.7420274071
+Subtotal sum agrees with full similarity: verified (rtol=1e-12, atol=1e-12)
+
+Selected passages (k=2; no relevance threshold):
+
+[T1] training.txt
+Laser training must be renewed every 12 months. A current training record is required before operating the laser.
+
+[B1] booking.txt
+Laser room bookings are limited to two hours per session. Reserve the room through the equipment calendar.
+
+Q4: What is the laser wavelength?
+Question vector: shape=(384,), length=0.9999999451
+  First 12 coordinates: [0.0241, -0.0074, -0.0795, 0.0196, -0.0920, -0.0008, 0.0842, 0.0203, -0.0357, -0.0252, 0.0360, -0.0204]
+Question length approximately 1: verified (absolute tolerance 1e-6)
+All passage scores (descending; ties by ascending ID):
+T1 | training.txt | dot=0.3477212227 | cosine=0.3477212580
+A2 | access.txt | dot=0.3208271317 | cosine=0.3208271362
+B1 | booking.txt | dot=0.3115009478 | cosine=0.3115009587
+A1 | access.txt | dot=0.0579507259 | cosine=0.0579507234
+B2 | booking.txt | dot=-0.0434969724 | cosine=-0.0434969714
+T2 | training.txt | dot=-0.0544881293 | cosine=-0.0544881310
+Dot/cosine agreement: verified (rtol=1e-6, atol=1e-7; max difference=3.535334275329e-08)
+
+Similarity inspection for top passage T1:
+First 12 coordinate products: [0.0001508796, 0.0005244853, -0.0027412611, 0.0002871614, 0.0107340629, 0.0000096130, -0.0059607168, -0.0015458512, 0.0028779175, 0.0019312443, 0.0011706495, -0.0027625066]
+First 12 subtotal: 0.0046756776
+Remaining 372 coordinates subtotal: 0.3430455451
+Full similarity (all 384 coordinates): 0.3477212227
+Direct cosine = dot / (question length * passage length): 0.3477212580
+Subtotal sum agrees with full similarity: verified (rtol=1e-12, atol=1e-12)
+
+Selected passages (k=2; no relevance threshold):
+
+[T1] training.txt
+Laser training must be renewed every 12 months. A current training record is required before operating the laser.
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
