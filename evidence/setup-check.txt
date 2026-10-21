@@ -1,0 +1,10 @@
+W1020 23:39:16.001000 7736 .venv/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Python: 3.11.14
+sentence-transformers: 6.1.0
+torch: 2.14.1
+transformers: 5.20.2
+numpy: 2.4.6
+Model: sentence-transformers/all-MiniLM-L6-v2
+Device: cpu
+Vector shape: (384,)
