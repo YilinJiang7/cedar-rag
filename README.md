@@ -2,7 +2,7 @@
 
 Author: Yilin Jiang (worked solo, no partner).
 
-A small teaching project for the retrieval step of RAG (retrieval-augmented generation). It prints matching source passages and does not generate an answer.
+A small teaching project for the retrieval step of RAG (retrieval-augmented generation). The retriever scripts print matching source passages and do not generate answers; answers were generated separately (see "Answer generation (Task 4)").
 
 ## Environment
 
@@ -102,4 +102,8 @@ All run output in evidence/ is our own; no borrowed output.
 
 ## Individual reflection — Yilin Jiang
 
-(to be added)
+I split the documents into six passages and turned each passage and question into a 384-dimensional vector. I ranked the passages by dot product, selected the top two, and gave only these passages to the model, which answered with citations such as [A2].
+
+Q1 needed A1 and A2, but embedding retrieval missed A1, the passage about access hours, because it ranked fourth. The first generated answer did not point out that the passages lacked evidence about access at 19:00. After I added one instruction asking the model to check each condition separately, it acknowledged this gap. I learned that generation cannot replace evidence missed during retrieval; it can only explain what is missing.
+
+Next, I would try combining the passages selected by keyword and embedding retrieval. Keyword retrieval found A1 in Q1, while embedding retrieval matched the paraphrase in Q3, so combining them might keep evidence from both methods.
