@@ -1,0 +1,56 @@
+W1021 00:15:20.849000 8832 .venv/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Python: 3.11.14
+sentence-transformers: 6.1.0
+torch: 2.14.1
+transformers: 5.20.2
+numpy: 2.4.6
+Model: sentence-transformers/all-MiniLM-L6-v2
+Device: cpu
+Cache: _local/models (local files only)
+Document matrix shape: (6, 384)
+Document embeddings computed once and reused for every question in this run.
+Model outputs are retained without rounding and converted to float64 for similarity arithmetic.
+All 384 coordinates, not just the displayed 12, are used in retrieval.
+Individual coordinates are not assigned semantic names.
+Document A1 (access.txt): shape=(384,), length=1.0000000971
+  First 12 coordinates: [-0.0039, 0.0188, 0.0218, -0.0179, -0.0058, -0.0612, -0.0891, 0.0321, -0.0584, 0.0111, 0.0031, -0.0123]
+Document A2 (access.txt): shape=(384,), length=1.0000000409
+  First 12 coordinates: [0.0298, -0.0435, -0.0289, 0.0303, -0.0507, -0.0310, 0.0361, -0.0391, -0.0322, -0.0424, 0.0498, 0.0019]
+Document T1 (training.txt): shape=(384,), length=0.9999999532
+  First 12 coordinates: [0.0063, -0.0708, 0.0345, 0.0146, -0.1167, -0.0114, -0.0708, -0.0761, -0.0806, -0.0767, 0.0325, 0.1357]
+Document T2 (training.txt): shape=(384,), length=1.0000000234
+  First 12 coordinates: [0.0447, -0.0044, 0.0042, -0.0058, 0.0211, -0.0151, -0.0108, -0.0301, -0.0191, -0.0234, 0.0280, -0.0367]
+Document B1 (booking.txt): shape=(384,), length=1.0000000197
+  First 12 coordinates: [0.0856, -0.0417, -0.0194, 0.0377, -0.0668, -0.0053, -0.0260, -0.0618, -0.0186, -0.0023, -0.0050, 0.0659]
+Document B2 (booking.txt): shape=(384,), length=1.0000000787
+  First 12 coordinates: [0.0673, 0.0924, -0.0079, 0.0634, -0.0105, 0.0043, -0.0020, -0.0750, 0.0667, 0.0378, -0.0040, 0.0335]
+All document lengths approximately 1: verified (absolute tolerance 1e-6)
+
+Q1: May a trained graduate student operate the laser alone at 19:00?
+Question vector: shape=(384,), length=1.0000000343
+  First 12 coordinates: [0.0485, 0.0060, -0.0148, -0.0017, -0.0642, -0.0427, 0.0008, -0.0575, -0.0771, -0.0306, 0.0749, 0.0967]
+Question length approximately 1: verified (absolute tolerance 1e-6)
+All passage scores (descending; ties by ascending ID):
+A2 | access.txt | dot=0.6864456878 | cosine=0.6864456361
+T1 | training.txt | dot=0.5819528175 | cosine=0.5819528248
+B1 | booking.txt | dot=0.5326960339 | cosine=0.5326960052
+A1 | access.txt | dot=0.3742489069 | cosine=0.3742488577
+T2 | training.txt | dot=0.2704522332 | cosine=0.2704522176
+B2 | booking.txt | dot=0.1287396146 | cosine=0.1287396000
+Dot/cosine agreement: verified (rtol=1e-6, atol=1e-7; max difference=5.161682170574e-08)
+
+Similarity inspection for top passage A2:
+First 12 coordinate products: [0.0014475209, -0.0002631043, 0.0004261932, -0.0000504142, 0.0032577523, 0.0013239647, 0.0000280460, 0.0022502840, 0.0024829714, 0.0012972578, 0.0037300760, 0.0001809526]
+First 12 subtotal: 0.0161115004
+Remaining 372 coordinates subtotal: 0.6703341874
+Full similarity (all 384 coordinates): 0.6864456878
+Direct cosine = dot / (question length * passage length): 0.6864456361
+Subtotal sum agrees with full similarity: verified (rtol=1e-12, atol=1e-12)
+
+Selected passages (k=2; no relevance threshold):
+
+[A2] access.txt
+The laser room requires two trained people to be present whenever the laser is operating, including during general laboratory access hours.
+
+[T1] training.txt
+Laser training must be renewed every 12 months. A current training record is required before operating the laser.
